@@ -1,0 +1,163 @@
+.about-hero {
+  padding: 170px 0 70px;
+}
+
+.about-collage {
+  height: min(58vw, 560px);
+  margin-top: 46px;
+  overflow: hidden;
+  border-radius: var(--radius);
+  position: relative;
+  border: 3px solid #000;
+  box-shadow: var(--pixel-shadow);
+}
+
+.about-collage::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  pointer-events: none;
+  border: 2px dashed rgba(21,21,55,.28);
+}
+
+.about-collage__main {
+  position: absolute;
+  left: 4%;
+  top: 6%;
+  width: 72%;
+  height: 72%;
+  width: 100%;
+  object-fit: cover;
+  filter: saturate(.88) contrast(1.05);
+}
+
+.about-collage__person {
+  position: absolute;
+  z-index: 4;
+  left: 6%;
+  bottom: -2%;
+  width: 42%;
+  max-height: 430px;
+  object-fit: contain !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: drop-shadow(10px 16px 0 rgba(0,0,0,.2));
+}
+
+.about-collage__card {
+  position: absolute;
+  object-fit: cover;
+}
+
+.about-collage__card--one {
+  right: 4%;
+  top: 12%;
+  width: 36%;
+  height: 36%;
+}
+
+.about-collage__card--two {
+  right: 10%;
+  bottom: 5%;
+  width: 46%;
+  height: 34%;
+}
+
+.about-collage .shape--ring { left: 24px; bottom: 30px; }
+.about-collage .shape--stairs { right: 4%; top: 4%; }
+
+@media (max-width: 720px) {
+  .about-collage {
+    height: auto;
+    padding: 14px;
+  }
+
+  .about-collage__main,
+  .about-collage__card,
+  .about-collage__person {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    margin-top: 12px;
+  }
+
+  .about-collage .shape {
+    display: none;
+  }
+}
+
+.about-story,
+.fit-section,
+.about-people {
+  display: grid;
+  grid-template-columns: .95fr 1.05fr;
+  gap: 70px;
+}
+
+.about-story > p {
+  color: var(--muted);
+  font-size: 22px;
+}
+
+.about-people {
+  align-items: center;
+  padding-top: 36px;
+}
+
+.about-people img {
+  width: 100%;
+  min-height: 420px;
+  object-fit: cover;
+  border: 3px solid #000;
+  box-shadow: var(--pixel-shadow);
+}
+
+.about-people p:not(.eyebrow) {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 19px;
+}
+
+.principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+}
+
+.principles article,
+.values article {
+  padding: 30px;
+  background: rgba(255,255,255,.9);
+  border: 1px solid var(--line);
+}
+
+.principles span {
+  display: block;
+  margin-bottom: 54px;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.principles p,
+.values p {
+  margin-top: 18px;
+  color: var(--muted);
+}
+
+.values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 900px) {
+  .about-story,
+  .fit-section,
+  .about-people,
+  .principles,
+  .values {
+    grid-template-columns: 1fr;
+  }
+}
