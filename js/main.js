@@ -209,6 +209,20 @@ const buildServicesDropdown = () => {
 
   servicesLink.replaceWith(wrapper);
   wrapper.append(servicesLink, panel);
+
+  let closeTimer;
+  const openDropdown = () => {
+    window.clearTimeout(closeTimer);
+    wrapper.classList.add('is-open');
+  };
+  const queueClose = () => {
+    closeTimer = window.setTimeout(() => wrapper.classList.remove('is-open'), 140);
+  };
+
+  wrapper.addEventListener('mouseenter', openDropdown);
+  wrapper.addEventListener('mouseleave', queueClose);
+  wrapper.addEventListener('focusin', openDropdown);
+  wrapper.addEventListener('focusout', queueClose);
 };
 
 buildServicesDropdown();
