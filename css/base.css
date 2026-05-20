@@ -36,6 +36,8 @@ html {
 }
 
 body {
+  position: relative;
+  isolation: isolate;
   margin: 0;
   color: var(--ink);
   background:
@@ -73,6 +75,14 @@ body::after {
 
 body.nav-open {
   overflow: hidden;
+}
+
+.site-header,
+main,
+.site-footer,
+.mobile-menu {
+  position: relative;
+  z-index: 2;
 }
 
 a {

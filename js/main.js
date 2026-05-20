@@ -399,7 +399,7 @@ const buildTetrisStage = () => {
     stage.querySelectorAll('.tetris-block').forEach((block, index) => {
       if (index <= active) {
         const offset = Math.sin((index + window.scrollY) * 0.012) * 10;
-        block.style.opacity = '0.72';
+        block.style.opacity = '0.34';
         block.style.transform = `translate3d(${offset}px, 0, 0) rotate(${(index % 4) * 90}deg)`;
       } else {
         block.style.opacity = '0';

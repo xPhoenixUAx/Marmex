@@ -72,6 +72,18 @@
   box-shadow: 0 30px 90px rgba(23,21,18,.09);
 }
 
+.contact-panel {
+  display: grid;
+  gap: 28px;
+}
+
+@media (min-width: 901px) {
+  .contact-copy {
+    position: sticky;
+    top: 128px;
+  }
+}
+
 .contact-form label {
   display: grid;
   gap: 8px;
@@ -143,6 +155,65 @@
   color: var(--accent);
 }
 
+.contact-map {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(0, 240, 255, .16), transparent 30%),
+    radial-gradient(circle at 86% 78%, rgba(255, 43, 214, .14), transparent 28%),
+    rgba(255, 255, 255, .9);
+  border: 3px solid #000;
+  box-shadow: var(--pixel-shadow);
+  overflow: hidden;
+}
+
+.contact-map::before {
+  content: "";
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  width: 44px;
+  height: 44px;
+  background: var(--green);
+  border: 3px solid #000;
+  box-shadow: 5px 5px 0 #000;
+  transform: rotate(var(--scroll-rotate, 0deg));
+}
+
+.contact-map__header {
+  position: relative;
+  z-index: 1;
+  padding-right: 70px;
+}
+
+.contact-map h2 {
+  margin-top: 6px;
+  font-size: clamp(26px, 3vw, 38px);
+}
+
+.contact-map__header p:not(.eyebrow) {
+  margin-top: 10px;
+  color: var(--muted);
+}
+
+.contact-map iframe {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 330px;
+  border: 3px solid #000;
+  box-shadow: 6px 6px 0 #000;
+  filter: saturate(1.08) contrast(1.03);
+}
+
+.contact-map .text-link {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+}
+
 .ideal-fit {
   border-top: 1px solid var(--line);
 }
@@ -177,5 +248,9 @@
 
   .contact-visual {
     grid-template-columns: 1fr;
+  }
+
+  .contact-map iframe {
+    height: 280px;
   }
 }
