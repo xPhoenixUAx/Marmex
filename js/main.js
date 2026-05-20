@@ -3,6 +3,310 @@ const header = document.querySelector('.site-header');
 const menu = document.querySelector('.mobile-menu');
 const tetrisColors = ['#00f0ff', '#ff2bd6', '#37ff73', '#ffe84a', '#ff4b4b', '#7d5cff'];
 
+const searchIndex = [
+  {
+    title: 'Home',
+    category: 'Page',
+    url: 'index.html',
+    text: 'Marmex digital marketing agency, website builds, campaign systems, conversion planning, creative production, analytics and launch support.'
+  },
+  {
+    title: 'Services',
+    category: 'Page',
+    url: 'services.html',
+    text: 'Full cycle digital services from strategy and media planning to web design, development, automation, reporting and support.'
+  },
+  {
+    title: 'About Marmex',
+    category: 'Page',
+    url: 'about.html',
+    text: 'A Bratislava digital marketing company for teams that need clear positioning, practical execution and launch-ready web systems.'
+  },
+  {
+    title: 'Contact',
+    category: 'Page',
+    url: 'contact.html',
+    text: 'Send a project inquiry through the contact form for marketing, website, design, development or analytics work.'
+  },
+  {
+    title: 'Brand Strategy',
+    category: 'Service',
+    url: 'brand-strategy.html',
+    text: 'Positioning, audience definition, messaging, offer structure, market research, brand voice, creative direction and campaign foundations.'
+  },
+  {
+    title: 'Performance Marketing',
+    category: 'Service',
+    url: 'performance-marketing.html',
+    text: 'Paid acquisition across Meta Ads, TikTok Ads, LinkedIn Ads, Google Ads, funnels, campaign testing, optimization and reporting.'
+  },
+  {
+    title: 'Google Ads / Search Advertising',
+    category: 'Service',
+    url: 'google-ads.html',
+    text: 'Google Search, Performance Max, keyword planning, landing page alignment, conversion tracking, bidding and campaign management.'
+  },
+  {
+    title: 'Paid Social Campaigns',
+    category: 'Service',
+    url: 'paid-social.html',
+    text: 'Meta, Instagram, Facebook, TikTok and LinkedIn paid social campaigns, creative testing, audience strategy and funnel sequencing.'
+  },
+  {
+    title: 'SEO Strategy',
+    category: 'Service',
+    url: 'seo-strategy.html',
+    text: 'Technical SEO, content architecture, search intent planning, organic visibility, structured pages and long-term acquisition.'
+  },
+  {
+    title: 'Web Design',
+    category: 'Service',
+    url: 'web-design.html',
+    text: 'Editorial websites, landing pages, UI systems, conversion focused layouts, visual direction, responsive design and brand experience.'
+  },
+  {
+    title: 'Website Development',
+    category: 'Service',
+    url: 'website-development.html',
+    text: 'Frontend development, backend integration, PHP forms, performance, launch readiness, maintenance and scalable website delivery.'
+  },
+  {
+    title: 'Analytics & Automation',
+    category: 'Service',
+    url: 'analytics-automation.html',
+    text: 'GA4, Google Tag Manager, Looker Studio, CRM handoff, email automation, lead tracking, dashboards and reporting systems.'
+  },
+  {
+    title: 'Privacy Policy',
+    category: 'Legal',
+    url: 'privacy.html',
+    text: 'How Marmex handles personal data, inquiry information, analytics, cookies and business communication.'
+  },
+  {
+    title: 'Terms of Service',
+    category: 'Legal',
+    url: 'terms.html',
+    text: 'Business terms, project scope, content responsibilities, payments, timelines and professional service conditions.'
+  },
+  {
+    title: 'Cookie Policy',
+    category: 'Legal',
+    url: 'cookies.html',
+    text: 'Cookie categories, analytics cookies, preferences, browser controls and website measurement.'
+  }
+];
+
+const getSearchMatches = (query) => {
+  const normalized = query.trim().toLowerCase();
+  if (!normalized) return searchIndex.slice(0, 5);
+
+  return searchIndex
+    .map((item) => {
+      const haystack = `${item.title} ${item.category} ${item.text}`.toLowerCase();
+      const titleMatch = item.title.toLowerCase().includes(normalized) ? 3 : 0;
+      const categoryMatch = item.category.toLowerCase().includes(normalized) ? 2 : 0;
+      const textMatch = haystack.includes(normalized) ? 1 : 0;
+      return { ...item, score: titleMatch + categoryMatch + textMatch };
+    })
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title))
+    .slice(0, 6);
+};
+
+const renderSearchResults = (query, resultsList) => {
+  const matches = getSearchMatches(query);
+
+  resultsList.innerHTML = matches.length
+    ? matches.map((item) => `
+      <a class="site-search__result" href="${item.url}">
+        <span>${item.category}</span>
+        <strong>${item.title}</strong>
+      </a>
+    `).join('')
+    : '<p class="site-search__empty">No result. Try ads, SEO, website or automation.</p>';
+};
+
+const buildPageLoader = () => {
+  if (document.querySelector('.page-loader')) return;
+
+  const loader = document.createElement('div');
+  loader.className = 'page-loader';
+  loader.setAttribute('aria-hidden', 'true');
+  loader.innerHTML = `
+    <div class="page-loader__box">
+      <span class="page-loader__brand">Marmex</span>
+      <span class="page-loader__block page-loader__block--one"></span>
+      <span class="page-loader__block page-loader__block--two"></span>
+      <span class="page-loader__block page-loader__block--three"></span>
+      <span class="page-loader__block page-loader__block--four"></span>
+    </div>
+  `;
+  document.body.append(loader);
+
+  const showLoader = () => {
+    loader.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('is-loading-page');
+  };
+
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[href]');
+    if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || link.target === '_blank') return;
+
+    const url = new URL(href, window.location.href);
+    const isSameOrigin = url.origin === window.location.origin;
+    const isPage = url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname.endsWith('/');
+    const isSamePageHash = url.pathname === window.location.pathname && url.hash;
+
+    if (!isSameOrigin || !isPage || isSamePageHash) return;
+
+    event.preventDefault();
+    showLoader();
+    window.setTimeout(() => {
+      window.location.href = url.href;
+    }, 420);
+  });
+
+  window.addEventListener('pageshow', () => {
+    loader.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('is-loading-page');
+  });
+};
+
+buildPageLoader();
+
+const buildServicesDropdown = () => {
+  const siteNav = header?.querySelector('.site-nav');
+  const servicesLink = siteNav?.querySelector(':scope > a[href="services.html"]');
+  if (!siteNav || !servicesLink || siteNav.querySelector('.nav-services')) return;
+
+  const serviceItems = searchIndex.filter((item) => item.category === 'Service');
+  const wrapper = document.createElement('div');
+  wrapper.className = 'nav-services';
+
+  servicesLink.classList.add('nav-services__trigger');
+  servicesLink.setAttribute('aria-haspopup', 'true');
+  servicesLink.innerHTML = 'Services <span aria-hidden="true"></span>';
+
+  const panel = document.createElement('div');
+  panel.className = 'nav-services__panel';
+  panel.innerHTML = `
+    <a class="nav-services__all" href="services.html">
+      <strong>All Services</strong>
+      <small>Strategy, websites, campaigns, automation and support in one delivery system.</small>
+    </a>
+    <div class="nav-services__grid">
+      ${serviceItems.map((item) => `
+        <a href="${item.url}">
+          <span>${item.title}</span>
+          <small>${item.text}</small>
+        </a>
+      `).join('')}
+    </div>
+  `;
+
+  servicesLink.replaceWith(wrapper);
+  wrapper.append(servicesLink, panel);
+};
+
+buildServicesDropdown();
+
+const buildSiteSearch = () => {
+  if (!header || document.querySelector('.site-search-form')) return;
+
+  const placeholderIdeas = [
+    'Search Google Ads',
+    'Search web design',
+    'Search SEO strategy',
+    'Search automation',
+    'Search paid social'
+  ];
+  let placeholderIndex = 0;
+
+  const searchForm = document.createElement('form');
+  searchForm.className = 'site-search-form';
+  searchForm.setAttribute('role', 'search');
+  searchForm.innerHTML = `
+    <label class="site-search-label">
+      <span class="site-search-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path d="m21 21-4.2-4.2m1.2-5.3a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z"></path>
+        </svg>
+      </span>
+      <span class="sr-only">Search site</span>
+      <input class="site-search-input" type="search" autocomplete="off" placeholder="${placeholderIdeas[0]}" aria-label="Search site" />
+    </label>
+    <div class="site-search-dropdown" aria-live="polite"></div>
+  `;
+  const siteNav = header.querySelector('.site-nav');
+  const navCta = siteNav?.querySelector('.nav-cta');
+  if (siteNav && navCta) {
+    siteNav.insertBefore(searchForm, navCta);
+  } else if (siteNav) {
+    siteNav.append(searchForm);
+  } else {
+    header.insertBefore(searchForm, navToggle);
+  }
+
+  const input = searchForm.querySelector('input');
+  const results = searchForm.querySelector('.site-search-dropdown');
+
+  const openDropdown = () => {
+    searchForm.classList.add('is-open');
+    renderSearchResults(input.value, results);
+  };
+
+  const closeDropdown = () => {
+    searchForm.classList.remove('is-open');
+  };
+
+  const rotatePlaceholder = () => {
+    if (document.activeElement === input || input.value) return;
+    placeholderIndex = (placeholderIndex + 1) % placeholderIdeas.length;
+    input.classList.add('is-changing-placeholder');
+    window.setTimeout(() => {
+      input.placeholder = placeholderIdeas[placeholderIndex];
+      input.classList.remove('is-changing-placeholder');
+    }, 140);
+  };
+
+  window.setInterval(rotatePlaceholder, 2100);
+
+  input.addEventListener('focus', openDropdown);
+  input.addEventListener('input', openDropdown);
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeDropdown();
+      input.blur();
+    }
+  });
+
+  searchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const firstMatch = getSearchMatches(input.value)[0];
+    if (firstMatch) {
+      window.location.href = firstMatch.url;
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeDropdown();
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+      event.preventDefault();
+      input.focus();
+      openDropdown();
+    }
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!searchForm.contains(event.target)) closeDropdown();
+  });
+};
+
+buildSiteSearch();
+
 if (navToggle) {
   navToggle.addEventListener('click', () => {
     const isOpen = document.body.classList.toggle('nav-open');
@@ -24,6 +328,7 @@ document.querySelectorAll('.mobile-menu a').forEach((link) => {
 const setHeaderState = () => {
   if (!header) return;
   header.classList.toggle('is-scrolled', window.scrollY > 16);
+  document.documentElement.style.setProperty('--scroll-rotate', `${window.scrollY * 0.08}deg`);
 };
 
 setHeaderState();
