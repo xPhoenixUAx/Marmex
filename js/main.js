@@ -91,7 +91,7 @@ const searchIndex = [
   {
     title: 'Cookie Policy',
     category: 'Legal',
-    url: 'cookies.html',
+    url: 'cookie.html',
     text: 'Cookie categories, analytics cookies, preferences, browser controls and website measurement.'
   }
 ];
@@ -413,6 +413,116 @@ const buildTetrisStage = () => {
 };
 
 buildTetrisStage();
+
+const buildCookieConsent = () => {
+  const storageKey = 'marmex_cookie_consent';
+  const existingChoice = (() => {
+    try {
+      return JSON.parse(localStorage.getItem(storageKey));
+    } catch {
+      return null;
+    }
+  })();
+
+  const saveChoice = (choice) => {
+    const payload = {
+      essential: true,
+      analytics: Boolean(choice.analytics),
+      marketing: Boolean(choice.marketing),
+      savedAt: new Date().toISOString()
+    };
+
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(payload));
+    } catch {
+      // Consent still applies for this page view even if storage is unavailable.
+    }
+
+    window.dispatchEvent(new CustomEvent('marmexCookieConsent', { detail: payload }));
+    document.body.classList.remove('cookie-panel-open');
+    document.querySelector('.cookie-banner')?.remove();
+    document.querySelector('.cookie-preferences')?.remove();
+  };
+
+  const openPreferences = () => {
+    if (document.querySelector('.cookie-preferences')) return;
+
+    const panel = document.createElement('section');
+    panel.className = 'cookie-preferences';
+    panel.setAttribute('aria-label', 'Cookie preferences');
+    panel.innerHTML = `
+      <div class="cookie-preferences__card">
+        <div>
+          <p class="eyebrow">Cookie settings</p>
+          <h2>Choose what Marmex can use.</h2>
+          <p>Essential cookies keep the site working. Analytics and marketing cookies help us measure traffic and campaign performance when enabled.</p>
+        </div>
+        <label><input type="checkbox" checked disabled> Essential cookies <span>Always active</span></label>
+        <label><input type="checkbox" name="analytics"> Analytics cookies <span>Website usage and performance measurement</span></label>
+        <label><input type="checkbox" name="marketing"> Marketing cookies <span>Advertising measurement and remarketing support</span></label>
+        <div class="cookie-actions">
+          <button class="button button--secondary" type="button" data-cookie-close>Back</button>
+          <button class="button button--secondary" type="button" data-cookie-reject>Reject non-essential</button>
+          <button class="button button--primary" type="button" data-cookie-save>Save choices</button>
+        </div>
+      </div>
+    `;
+
+    document.body.append(panel);
+    document.body.classList.add('cookie-panel-open');
+    panel.querySelector('[name="analytics"]').checked = Boolean(existingChoice?.analytics);
+    panel.querySelector('[name="marketing"]').checked = Boolean(existingChoice?.marketing);
+    panel.querySelector('[data-cookie-close]').addEventListener('click', () => {
+      panel.remove();
+      document.body.classList.remove('cookie-panel-open');
+    });
+    panel.querySelector('[data-cookie-reject]').addEventListener('click', () => saveChoice({ analytics: false, marketing: false }));
+    panel.querySelector('[data-cookie-save]').addEventListener('click', () => saveChoice({
+      analytics: panel.querySelector('[name="analytics"]').checked,
+      marketing: panel.querySelector('[name="marketing"]').checked
+    }));
+  };
+
+  document.querySelectorAll('.footer-columns nav').forEach((nav) => {
+    if (!nav.textContent.includes('Legal') || nav.querySelector('[data-cookie-settings]')) return;
+    const settings = document.createElement('button');
+    settings.className = 'footer-cookie-button';
+    settings.type = 'button';
+    settings.dataset.cookieSettings = 'true';
+    settings.textContent = 'Cookie settings';
+    settings.addEventListener('click', openPreferences);
+    nav.append(settings);
+  });
+
+  if (existingChoice) {
+    window.dispatchEvent(new CustomEvent('marmexCookieConsent', { detail: existingChoice }));
+    return;
+  }
+
+  const banner = document.createElement('section');
+  banner.className = 'cookie-banner';
+  banner.setAttribute('aria-label', 'Cookie notice');
+  banner.innerHTML = `
+    <div class="cookie-banner__copy">
+      <p class="eyebrow">Cookie notice</p>
+      <h2>We use cookies to keep the site sharp.</h2>
+      <p>Essential cookies make the website work. With your consent, analytics and marketing cookies may help us understand traffic and campaign performance. You can change this later in the footer.</p>
+      <a href="cookie.html">Read Cookie Policy</a>
+    </div>
+    <div class="cookie-actions">
+      <button class="button button--secondary" type="button" data-cookie-manage>Manage choices</button>
+      <button class="button button--secondary" type="button" data-cookie-reject>Reject non-essential</button>
+      <button class="button button--primary" type="button" data-cookie-accept>Accept all</button>
+    </div>
+  `;
+
+  document.body.append(banner);
+  banner.querySelector('[data-cookie-manage]').addEventListener('click', openPreferences);
+  banner.querySelector('[data-cookie-reject]').addEventListener('click', () => saveChoice({ analytics: false, marketing: false }));
+  banner.querySelector('[data-cookie-accept]').addEventListener('click', () => saveChoice({ analytics: true, marketing: true }));
+};
+
+buildCookieConsent();
 
 window.addEventListener('pointermove', (event) => {
   const x = (event.clientX / window.innerWidth - 0.5).toFixed(3);
