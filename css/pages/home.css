@@ -905,24 +905,40 @@
   }
 
   .hero {
-    display: block;
+    display: grid;
+    grid-template-areas:
+      "people"
+      "content";
+    align-items: start;
+    min-height: auto;
+    padding-top: 104px;
+    padding-bottom: 58px;
   }
 
   .hero__content {
+    grid-area: content;
     width: min(100%, var(--max));
+    text-align: center;
+    transform: none;
+  }
+
+  .hero__actions {
+    justify-content: center;
   }
 
   .hero-people {
+    grid-area: people;
     position: relative;
     right: auto;
     bottom: auto;
-    width: min(100%, 660px);
-    min-height: 460px;
-    margin: 54px auto 0;
+    width: min(100%, 520px);
+    min-height: 330px;
+    margin: 0 auto 24px;
+    transform: none;
   }
 
   .hero-people img {
-    max-height: 460px;
+    max-height: 340px;
   }
 
   .service-lanes a {
@@ -943,9 +959,202 @@
 }
 
 @media (max-width: 620px) {
+  .editorial-intro {
+    gap: 24px;
+    padding-top: 48px;
+    padding-bottom: 56px;
+  }
+
+  .quote-card {
+    padding: 24px 22px 30px;
+  }
+
+  .quote-card::before {
+    top: -16px;
+    right: 12px;
+    font-size: 88px;
+    text-shadow: 4px 4px 0 #000;
+  }
+
+  .quote-card h2 {
+    font-size: clamp(25px, 8vw, 34px);
+    line-height: 1.08;
+  }
+
+  .quote-card span {
+    margin-top: 16px;
+  }
+
+  .intro-note {
+    gap: 14px;
+    font-size: 17px;
+  }
+
+  .service-preview {
+    gap: 24px;
+    padding-top: 54px;
+    padding-bottom: 54px;
+  }
+
+  .service-preview__lead h2 {
+    font-size: clamp(27px, 8.5vw, 38px);
+    line-height: 1.08;
+  }
+
+  .service-lanes a {
+    grid-template-columns: 42px 1fr 34px;
+    gap: 12px;
+    padding: 18px 0;
+  }
+
+  .service-lanes .pixel-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 8px;
+  }
+
+  .service-lanes strong {
+    font-size: 18px;
+    line-height: 1.16;
+  }
+
+  .service-lanes p {
+    margin-top: 4px;
+    font-size: 15px;
+    line-height: 1.42;
+  }
+
+  .service-lanes a::after {
+    width: 30px;
+    height: 30px;
+    font-size: 10px;
+    box-shadow: 3px 3px 0 #000;
+  }
+
   .hero {
-    min-height: 680px;
-    padding-bottom: 46px;
+    min-height: auto;
+    padding-top: 84px;
+    padding-bottom: 42px;
+  }
+
+  .why-section,
+  .client-journey,
+  .human-scenes,
+  .process,
+  .capability,
+  .philosophy {
+    padding-top: 54px;
+    padding-bottom: 54px;
+  }
+
+  .why-section,
+  .client-journey,
+  .capability {
+    gap: 26px;
+  }
+
+  .why-section h2,
+  .client-journey h2,
+  .human-scenes h2,
+  .case-section h2,
+  .process h2,
+  .capability h2 {
+    font-size: clamp(27px, 8.5vw, 38px);
+    line-height: 1.08;
+  }
+
+  .sharp-list li {
+    padding: 12px 0;
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .image-panel {
+    min-height: 0;
+    aspect-ratio: 16 / 11;
+  }
+
+  .image-panel img {
+    min-height: 0;
+    height: 100%;
+  }
+
+  .client-journey {
+    padding-top: 46px;
+  }
+
+  .client-journey__copy p:not(.eyebrow),
+  .case-section__copy p:not(.eyebrow) {
+    margin-top: 14px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .platform-strip {
+    gap: 7px;
+    margin-top: 18px;
+  }
+
+  .platform-strip span {
+    padding: 7px 8px;
+    font-size: 11px;
+  }
+
+  .journey-board {
+    min-height: auto;
+    padding: 12px;
+    padding-top: 180px;
+  }
+
+  .journey-board img {
+    height: 210px;
+    object-position: center top;
+  }
+
+  .journey-board__steps {
+    gap: 10px;
+  }
+
+  .journey-board__steps article {
+    grid-template-columns: 36px 1fr;
+    padding: 12px;
+  }
+
+  .journey-board__steps span {
+    width: 32px;
+    height: 32px;
+    font-size: 7px;
+  }
+
+  .journey-board__steps strong {
+    font-size: 17px;
+  }
+
+  .journey-board__steps p {
+    font-size: 13px;
+  }
+
+  .human-scenes {
+    gap: 22px;
+  }
+
+  .scene-grid {
+    gap: 14px;
+  }
+
+  .scene-grid img {
+    aspect-ratio: 16 / 8;
+  }
+
+  .scene-grid h3 {
+    margin-top: 14px;
+    font-size: 20px;
+  }
+
+  .scene-grid p {
+    margin: 8px 0 16px;
+    font-size: 15px;
+    line-height: 1.45;
   }
 
   .process__list,
@@ -955,10 +1164,72 @@
 
   .case-section {
     padding: 24px;
+    gap: 22px;
+    margin: 18px auto;
+  }
+
+  .case-collage {
+    min-height: 260px;
+  }
+
+  .case-collage::after,
+  .case-collage .shape {
+    display: none;
+  }
+
+  .case-collage__main {
+    width: 100%;
+    height: 190px;
+  }
+
+  .case-collage__side {
+    width: 52%;
+    height: 116px;
+    border-width: 3px;
+  }
+
+  .case-stats {
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .case-stats div {
+    padding-top: 10px;
+  }
+
+  .case-stats strong {
+    font-size: 21px;
+  }
+
+  .process__list {
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .process__list div {
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .process__list p {
+    margin-top: 18px;
+    font-size: 15px;
+    line-height: 1.45;
   }
 
   .hero-people {
-    min-height: 380px;
+    width: min(100%, 390px);
+    min-height: 284px;
+    margin-bottom: 18px;
+  }
+
+  .hero-people img {
+    max-height: 300px;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 10vw, 44px);
+    line-height: 1.04;
   }
 
   .hero-people .shape {
@@ -970,10 +1241,48 @@
   }
 
   .capability-board__visual {
-    min-height: 260px;
+    min-height: 220px;
   }
 
   .capability-board__visual .shape {
     display: none;
+  }
+
+  .capability-board {
+    gap: 16px;
+  }
+
+  .capability-board__copy {
+    padding: 20px;
+  }
+
+  .capability-board__copy p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .capability-pixels {
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .capability-pixels span {
+    padding: 8px 9px;
+    font-size: 11px;
+  }
+
+  .philosophy blockquote {
+    font-size: clamp(25px, 8vw, 36px);
+    line-height: 1.18;
+  }
+
+  .cta-band {
+    gap: 20px;
+    padding: 28px 22px;
+  }
+
+  .cta-band h2 {
+    font-size: clamp(26px, 8vw, 36px);
+    line-height: 1.1;
   }
 }

@@ -632,6 +632,58 @@
 }
 
 @media (max-width: 620px) {
+  .service-hero {
+    gap: 22px;
+    padding-top: 112px;
+    padding-bottom: 42px;
+  }
+
+  .service-hero::before {
+    right: 12px;
+    top: 94px;
+    width: 48px;
+    height: 48px;
+    border-width: 7px;
+    box-shadow: 4px 4px 0 #000;
+  }
+
+  .service-hero::after {
+    min-height: 210px;
+    order: -1;
+    animation: none;
+  }
+
+  .service-hero h1 {
+    font-size: clamp(31px, 9vw, 42px);
+    line-height: 1.06;
+  }
+
+  .service-hero > p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .hero-chips {
+    gap: 7px;
+    margin-top: 18px;
+  }
+
+  .hero-chips span {
+    padding: 7px 8px;
+    font-size: 11px;
+  }
+
+  .service-story,
+  .tool-section,
+  .scenario-section,
+  .included-grid,
+  .service-example,
+  .service-visual-strip,
+  .deliverable-section,
+  .impact-section {
+    gap: 24px;
+  }
+
   .timeline,
   .scenario-grid,
   .included-list {
@@ -642,7 +694,7 @@
   .service-story__image img {
     min-height: 0;
     height: auto;
-    aspect-ratio: 16 / 11;
+    aspect-ratio: 16 / 9.5;
   }
 
   .service-story__image .shape {
@@ -652,15 +704,192 @@
   .service-story__copy,
   .service-example,
   .service-visual-strip {
-    padding: 24px;
+    padding: 20px;
   }
 
-  .left-signal-grid {
-    grid-template-columns: 1fr;
-    padding-bottom: 72px;
+  .service-story__copy .pixel-icon,
+  .tool-section .pixel-icon {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 14px;
+    font-size: 9px;
+  }
+
+  .service-story__copy h2,
+  .tool-section h2,
+  .scenario-section h2,
+  .included-grid h2,
+  .service-example h2,
+  .service-visual-strip h2,
+  .deliverable-section h2,
+  .impact-section h2,
+  .faq h2 {
+    font-size: clamp(25px, 8vw, 34px);
+    line-height: 1.1;
+  }
+
+  .service-story__copy p:not(.eyebrow),
+  .included-grid p,
+  .service-example p,
+  .service-visual-strip__copy p:not(.eyebrow),
+  .section-note {
+    margin-top: 14px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .service-story blockquote {
+    margin-top: 18px;
+    padding: 16px;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .scenario-grid {
+    gap: 10px;
+  }
+
+  .scenario-grid article,
+  .impact-columns div {
+    padding: 16px;
+    box-shadow: 3px 3px 0 #000;
+  }
+
+  .scenario-grid span {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+    font-size: 7px;
+  }
+
+  .tool-grid {
+    gap: 8px;
+  }
+
+  .tool-grid span {
+    min-height: 34px;
+    padding: 0 9px 0 34px;
+    font-size: 12px;
+    box-shadow: 3px 3px 0 #000;
+  }
+
+  .tool-grid span::before {
+    left: 8px;
+    width: 15px;
+    height: 15px;
+  }
+
+  .included-list,
+  .deliverable-grid {
+    gap: 9px;
+  }
+
+  .included-list span,
+  .deliverable-grid span {
+    padding: 13px;
+    font-size: 14px;
+    box-shadow: 3px 3px 0 #000;
+  }
+
+  .service-visual-strip::before,
+  .service-visual-strip::after,
+  .impact-section::after,
+  .deliverable-section > div:first-child::before,
+  .deliverable-section > div:first-child::after,
+  .impact-section > div:first-child::before,
+  .impact-section > div:first-child::after {
+    display: none;
+  }
+
+  .service-visual-strip__media img {
+    aspect-ratio: 16 / 9;
+    box-shadow: 4px 4px 0 #000;
   }
 
   .visual-mini-grid {
-    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .visual-mini-grid span {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .timeline {
+    gap: 10px;
+  }
+
+  .timeline article {
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .timeline span {
+    margin-bottom: 18px;
+  }
+
+  .timeline p {
+    margin-top: 12px;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .deliverable-section > div:first-child,
+  .impact-section,
+  .impact-section > div:first-child {
+    padding: 20px;
+  }
+
+  .left-signal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 18px;
+    padding-bottom: 0;
+  }
+
+  .left-signal-grid span {
+    padding: 10px;
+    font-size: 11px;
+  }
+
+  .impact-columns {
+    gap: 10px;
+  }
+
+  .impact-columns div {
+    padding: 16px 16px 16px 54px;
+  }
+
+  .impact-columns div::before {
+    left: 16px;
+    top: 18px;
+    width: 22px;
+    height: 22px;
+    border-width: 2px;
+    box-shadow: 3px 3px 0 #000;
+  }
+
+  .faq details {
+    padding: 16px 0;
+  }
+
+  .faq summary {
+    font-size: 17px;
+  }
+
+  .faq p {
+    margin-top: 10px;
+    font-size: 15px;
+  }
+
+  .cta-band {
+    padding: 28px 22px;
+    gap: 20px;
+  }
+
+  .cta-band h2 {
+    font-size: clamp(26px, 8vw, 36px);
+    line-height: 1.1;
   }
 }

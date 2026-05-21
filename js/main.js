@@ -321,6 +321,36 @@ const buildSiteSearch = () => {
 
 buildSiteSearch();
 
+const buildMobileServicesDropdown = () => {
+  const mobileInner = menu?.querySelector('.mobile-menu__inner');
+  const servicesLink = mobileInner?.querySelector('a[href="services.html"]');
+  if (!mobileInner || !servicesLink || mobileInner.querySelector('.mobile-services')) return;
+
+  const serviceItems = searchIndex.filter((item) => item.category === 'Service');
+  const wrapper = document.createElement('div');
+  wrapper.className = 'mobile-services';
+  wrapper.innerHTML = `
+    <button class="mobile-services__trigger" type="button" aria-expanded="false">
+      <span>Services</span>
+      <span aria-hidden="true">+</span>
+    </button>
+    <div class="mobile-services__panel">
+      <a href="services.html">All Services</a>
+      ${serviceItems.map((item) => `<a href="${item.url}">${item.title}</a>`).join('')}
+    </div>
+  `;
+
+  servicesLink.replaceWith(wrapper);
+
+  const trigger = wrapper.querySelector('.mobile-services__trigger');
+  trigger.addEventListener('click', () => {
+    const isOpen = wrapper.classList.toggle('is-open');
+    trigger.setAttribute('aria-expanded', String(isOpen));
+  });
+};
+
+buildMobileServicesDropdown();
+
 if (navToggle) {
   navToggle.addEventListener('click', () => {
     const isOpen = document.body.classList.toggle('nav-open');

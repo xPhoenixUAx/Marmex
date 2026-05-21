@@ -254,3 +254,138 @@
     height: 280px;
   }
 }
+
+@media (max-width: 640px) {
+  .contact-layout {
+    gap: 26px;
+    padding-top: 116px;
+    padding-bottom: 46px;
+  }
+
+  .contact-copy h1 {
+    font-size: clamp(31px, 9vw, 42px);
+    line-height: 1.06;
+  }
+
+  .contact-copy p:not(.eyebrow) {
+    margin-top: 14px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .after-inquiry {
+    margin-top: 24px;
+    padding: 18px 0;
+  }
+
+  .after-inquiry h2 {
+    font-size: clamp(25px, 8vw, 34px);
+    line-height: 1.1;
+  }
+
+  .after-inquiry ol {
+    gap: 8px;
+    margin-top: 14px;
+    padding-left: 18px;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .contact-note {
+    gap: 6px;
+    margin-top: 22px;
+  }
+
+  .contact-note span {
+    font-size: 11px;
+  }
+
+  .contact-note p {
+    font-size: 14px !important;
+  }
+
+  .contact-panel {
+    gap: 20px;
+  }
+
+  .contact-form {
+    gap: 13px;
+    padding: 20px;
+    box-shadow: 5px 5px 0 #000;
+    border: 2px solid #000;
+  }
+
+  .contact-form label {
+    gap: 6px;
+    font-size: 13px;
+  }
+
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    padding: 11px 12px;
+  }
+
+  .contact-form textarea {
+    min-height: 130px;
+  }
+
+  .trust-line,
+  .form-status {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .contact-map {
+    gap: 14px;
+    padding: 20px;
+    box-shadow: 5px 5px 0 #000;
+  }
+
+  .contact-map::before {
+    display: none;
+  }
+
+  .contact-map__header {
+    padding-right: 0;
+  }
+
+  .contact-map h2 {
+    font-size: clamp(24px, 8vw, 32px);
+    line-height: 1.1;
+  }
+
+  .contact-map iframe {
+    height: 210px;
+    box-shadow: 4px 4px 0 #000;
+  }
+
+  .contact-visual {
+    gap: 22px;
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .contact-visual h2,
+  .ideal-fit h2 {
+    font-size: clamp(26px, 8vw, 36px);
+    line-height: 1.1;
+  }
+
+  .contact-visual p:not(.eyebrow) {
+    margin-top: 12px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .contact-visual img {
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+    box-shadow: 4px 4px 0 #000;
+  }
+
+  .ideal-fit {
+    padding-top: 48px;
+    padding-bottom: 52px;
+  }
+}
